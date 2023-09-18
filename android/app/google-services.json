@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "742661833583",
+    "project_id": "coffee-club-9ab07",
+    "storage_bucket": "coffee-club-9ab07.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:742661833583:android:b76c6f3675ae6d4813de9a",
+        "android_client_info": {
+          "package_name": "com.club.coffee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "742661833583-1bq380ajtuf17p1dh0vsnr1oova1j154.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYM6CjM-Dt45bx26l_CPw6AbcHw_FPGYs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "742661833583-1bq380ajtuf17p1dh0vsnr1oova1j154.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "742661833583-bl0bmnbrgq3j640p800aodkgsgvf5cr6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.club.coffee"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
