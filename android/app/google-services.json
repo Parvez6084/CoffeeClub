@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "742661833583-1bq380ajtuf17p1dh0vsnr1oova1j154.apps.googleusercontent.com",
+          "client_id": "742661833583-4ipsc4gsmhqfkt86pludpqvokk8j6mkh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.club.coffee",
+            "certificate_hash": "d9600a8a0763024eb5ac6d4a4060e999eb20c3ee"
+          }
+        },
+        {
+          "client_id": "742661833583-g28tugimj09hr55ssonu4dprtcjatir9.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
