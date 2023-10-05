@@ -10,31 +10,21 @@ import '../views/login_page.dart';
 import 'package:gap/gap.dart';
 
 class HomePage extends StatelessWidget {
-   HomePage({super.key});
+   const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.blackColor,
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
-          if (state is UnAuthenticated) {
-            // Navigate to the sign in screen when the user Signs Out
-            Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => const LoginPage()),
-                  (route) => false,
-            );
-          }
+          if (state is UnAuthenticated) {Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const LoginPage()), (route) => false,);}
         },
         child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
           stream: FirebaseFirestore.instance.collection('users').snapshots(),
           builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return const CircularProgressIndicator(); // Display a loading indicator while data is loading.
-            }
-
-            final List<QueryDocumentSnapshot<Map<String, dynamic>>> usersData =
-                snapshot.data!.docs; // Convert the QuerySnapshot into a List of documents.
-
+            if (!snapshot.hasData) {return const CircularProgressIndicator();}
+            final List<QueryDocumentSnapshot<Map<String, dynamic>>> usersData = snapshot.data!.docs;
             return SafeArea(
               child: ListView(
                 children: [
@@ -46,20 +36,22 @@ class HomePage extends StatelessWidget {
                       children: [
                          Row(
                           children: [
-                            PrimaryText(
+                            const PrimaryText(
                               text: 'Chat with\nyour friends',
                               size: 24,
                               color: Colors.white,
                               fontWeight: FontWeight.w900,
                             ),
-                            IconButton(onPressed: (){_authenticateWithGoogle;LoginPage();}, icon: Icon(Icons.east_sharp))
+                            IconButton(onPressed: (){_signOutGoogle(context);},
+                              icon: const Icon(Icons.east_sharp, color: Colors.white)
+                            )
                           ],
                         ),
                         const Gap(24),
                         SizedBox(height: 64,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount: 6,
+                            itemCount: usersData.length,
                             itemBuilder: (BuildContext context, int index) {
                               return  Container(
                                   margin: const EdgeInsets.all(4),
@@ -69,7 +61,7 @@ class HomePage extends StatelessWidget {
                                       shape: BoxShape.circle,
                                       color: AppColors.blackColor
                                   ),
-                                  child: const Avatar(imagePath: 'https://i.pinimg.com/originals/97/05/7c/97057c70bc6dfcd8706a6dc4b2f811d2.png')
+                                  child: Avatar(imagePath:  usersData[index]['photoUrl'])
                               );
                             },
                           ),
@@ -89,7 +81,6 @@ class HomePage extends StatelessWidget {
                         itemCount: usersData.length,
                         itemBuilder:(context, index){
                           return chatModel(context, userData: usersData[index].data(), isSeen: true);
-                          return Container();
                         }
                     ),
                   )
@@ -102,7 +93,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-Widget chatModel(BuildContext context,{bool isSeen = false,dynamic? userData}) {
+Widget chatModel(BuildContext context,{ bool isSeen = false, dynamic userData}) {
     print('>>>>>>>>>>>>>>>>>>${userData}');
     return Container(
        decoration: BoxDecoration(
@@ -112,7 +103,7 @@ Widget chatModel(BuildContext context,{bool isSeen = false,dynamic? userData}) {
        ),
        margin: const EdgeInsets.all(8),
        child: ListTile(
-          onTap: (){Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  SingleChatPage()));},
+          onTap: (){Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  const SingleChatPage()));},
           contentPadding: const EdgeInsets.only(left: 8, right: 16),
            leading: ClipOval(child: Image.network(userData['photoUrl'],scale: 2,),),
            title: Row(
@@ -130,10 +121,8 @@ Widget chatModel(BuildContext context,{bool isSeen = false,dynamic? userData}) {
         ),
      );
   }
-   void _authenticateWithGoogle(context) {
-     BlocProvider.of<AuthBloc>(context).add(
-       SignOutRequested(),
-     );
+   void _signOutGoogle(context) {
+     BlocProvider.of<AuthBloc>(context).add(SignOutRequested());
    }
 // Rest of your code...
 }
