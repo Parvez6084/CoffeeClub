@@ -13,9 +13,12 @@ class AuthRepository {
       final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
       final credential = GoogleAuthProvider.credential(accessToken: googleAuth?.accessToken, idToken: googleAuth?.idToken);
       final User? user = _firebaseAuth.currentUser;
-
+      print('>>>>>>>>>>>$user');
       await _firebaseAuth.signInWithCredential(credential);
-      if (user != null ) { await storeUserInFireStore(user);}
+      if (user != null ) {
+
+        await storeUserInFireStore(user);
+      }
 
     } catch (e) {
       throw Exception(e.toString());
